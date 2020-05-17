@@ -4,7 +4,8 @@
   "description": "Yet another Uni projects",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon server.js\" \"cd frontend && npm start\""
+    "start": "concurrently \"nodemon server.js\" \"cd frontend && npm start\"",
+    "lint": "eslint *.js --ignore-pattern frontend/**"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
     "nodemon": "^2.0.3"
   }
 }
