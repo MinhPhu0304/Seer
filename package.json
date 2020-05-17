@@ -4,7 +4,7 @@
   "description": "Yet another Uni projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"nodemon server.js\" \"cd frontend && npm start\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "mongoose": "^5.9.14"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.3"
   }
 }
