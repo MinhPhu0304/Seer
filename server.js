@@ -11,9 +11,18 @@ const PORT = process.env.PORT || 5000;
 
 server.use(bodyParser.json());
 server.use(Express.static(`${__dirname}/frontend/build`));
+
 Mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+Mongoose.connection.on('error', (err) => {
+  console.error(err); // eslint-disable-line no-console
+});
+
+Mongoose.connection.on('connected', () => {
+  console.log('Mongo DB is connected'); // eslint-disable-line no-console
 });
 
 server.get('/', (_, response) => response.sendFile('index.html'));
