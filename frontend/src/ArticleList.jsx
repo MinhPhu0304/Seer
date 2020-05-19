@@ -6,9 +6,7 @@ import './ArticleList.css';
 export function ArticleList() {
   return (
     <div className="ArticleList">
-      <h1>List of Articles</h1>
-      <hr />
-      <br />
+      <h1>Result</h1>
       <div className="result__container">
         <Card style={{ width: 274 }}>
           <CardContent>
