@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"nodemon server.js\" \"cd frontend && npm start\"",
-    "lint": "eslint **.js --ignore-pattern frontend",
+    "lint": "eslint **.js model/ --ignore-pattern frontend",
     "lint:fix": "eslint **.js --ignore-pattern frontend --fix"
   },
   "repository": {
