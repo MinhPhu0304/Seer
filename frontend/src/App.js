@@ -4,6 +4,7 @@ import seer from './seer.svg';
 import './App.css';
 // import TextField from '@material-ui/core/TextField';
 // import { makeStyles } from '@material-ui/core/styles';
+import {Search} from './Search';
 
 function App() {
   return (
@@ -16,30 +17,11 @@ function App() {
 
 
       </header>
+      <Search />
     </div>
 
   );
-
-  class Search extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = { Search: '' };
-    }
-    myChangeHandler = (event) => {
-      this.setState({Search: event.target.value});
-    }
-    render() {
-      return (
-        <form>
-        <input
-          type='text'
-          onChange={this.myChangeHandler}
-        />
-        </form>
-      );
-    }
   }
-}
 
 export default App;
 
