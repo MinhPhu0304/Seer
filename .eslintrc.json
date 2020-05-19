@@ -17,5 +17,6 @@
     },
     "ignorePatterns": ["frontend/**"],
     "rules": {
+        "no-use-before-define": "off"
     }
 }
