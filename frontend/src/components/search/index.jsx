@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { TextField, Button, InputLabel, MenuItem } from '@material-ui/core';
 
 import './search.css';
 

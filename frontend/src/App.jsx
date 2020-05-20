@@ -1,10 +1,10 @@
-import React from 'react';
-import seer from './seer.svg';
-
-import './App.css';
-import {Search} from './Search';
-import {ArticleList } from './ArticleList';
 import { Typography } from '@material-ui/core';
+import React from 'react';
+
+import seer from './seer.svg';
+import './App.css';
+import {Search} from './components/search';
+import { ArticleList } from './components/articleList';
 
 function App() {
   return (
@@ -21,4 +21,3 @@ function App() {
   }
 
 export default App;
-
