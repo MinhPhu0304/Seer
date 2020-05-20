@@ -1,5 +1,4 @@
-import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 
 import seer from './seer.svg';
 import './App.css';
@@ -9,22 +8,25 @@ import { convertSearchValueToURLParam } from './utils'
 
 function App() {
 
+  const [articles, setArticle] = useState([])
+
   const submitSearch = async (searchValue) => {
     const queryParam = convertSearchValueToURLParam(searchValue)
     const res = await fetch(`/search?${queryParam}`)
     const data = await res.json()
-    console.log(data)
+    setArticle(data)
   }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={seer} alt="Seer logo" className="logo"/>
       </header>
       <Search submitSearch={submitSearch}/>
-      <ArticleList />
+      <ArticleList articles={articles}/>
     </div>
 
   );
-  }
+}
 
 export default App;

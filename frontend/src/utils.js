@@ -13,10 +13,13 @@ function normalizeNestingObj(obj) {
     Benefit: [],
     Participants: [],
   }
-
-  obj.forEach(({ fieldPicked, valuePicked}) => {
-    o[fieldPicked] = [ ...o[fieldPicked], valuePicked]
-  })
+  try {
+    obj.forEach(({ fieldPicked, valuePicked}) => {
+      o[fieldPicked] = [ ...o[fieldPicked], valuePicked]
+    })
+  } catch (e) {
+    return {}
+  }
 
   return o
 }
