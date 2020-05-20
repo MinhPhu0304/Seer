@@ -1,6 +1,7 @@
-import React from 'react';
-import { TextField, Button, InputLabel, MenuItem } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, InputLabel, MenuItem, Fab } from '@material-ui/core';
 
+import { fieldValue as FieldValueMap } from './constants'
 import './search.css';
 
 const searchField = [
@@ -11,30 +12,55 @@ const searchField = [
 ]
 
 const operator = [
-  'And',
-  'Or',
-  'And not',
-  'Or not',
+  'contains',
+  'does not contain',
+  'begin with',
+  'ends with',
+  'is equal to'
 ]
 
-// Warning: this is a place holder value only
-const value = [
-  'Performance',
-  'Improve code quality',  
-]
+export function Search({ submitSearch }) {
+  const [description, setDescription] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [ifFieldValue, setIfFieldValue] = useState([])
+  const onSubmit = (e) => {
+    e.preventDefault()
+    submitSearch({
+      description,
+      startDate,
+      endDate,
+      ifFieldValue
+    })
+  }
 
-export function Search(props) {
+  const onChangeIfField = (values) => {
+    setIfFieldValue(values)
+  }
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value)
+  }
+
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value)
+  }
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value)
+  }
   return (
     <div className="search__container">
-      <form class="search__form" noValidate autoComplete="off">
+      <form className="search__form" noValidate autoComplete="off" onSubmit={onSubmit}>
         <InputLabel className="description__search_field">
-          Search for: <TextField className="search__Description_input" label="Description" variant="outlined" />
+          Search for: <TextField className="search__Description_input" value={description}
+                        onChange={handleDescriptionChange} label="Description" variant="outlined" required />
         </InputLabel>
         <InputLabel className="description__search_field">Date: <TextField
           label="From"
           type="date"
-          defaultValue=""
           variant="outlined"
+          onChange={handleStartDateChange}
           InputLabelProps={{
             shrink: true,
           }}
@@ -44,52 +70,115 @@ export function Search(props) {
             type="date"
             defaultValue=""
             variant="outlined"
+            onChange={handleEndDateChange}
             InputLabelProps={{
               shrink: true,
             }}
           />
         </InputLabel>
-        <InputLabel className="description__search_field">
-          If
-          <TextField
-            className="search__field__Select"
-            select
-            label="Field"
-            variant="outlined"
-          >
-            {searchField.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            className="search__field__Select"
-            select
-            label="Operator"
-            variant="outlined"
-          >
-            {operator.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            className="search__field__Select"
-            select
-            label="Value"
-            variant="outlined"
-          >
-            {value.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-        </InputLabel>
-        <Button className="btn__primary" variant="contained">Search</Button>
+        <IfComponent onChangeIfField={onChangeIfField}/>
+        <Button className="btn__primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
       </form>
     </div>
   );
+}
+
+function IfComponent({ onChangeIfField }) {
+  const [ifFilter, setFilter] = useState([{
+    key: 0,
+    fieldPicked: '',
+    operatorPicked: '',
+    valuePicked: '',
+  }])
+
+  useEffect(() => {
+    onChangeIfField(ifFilter)
+  }, [ifFilter])
+
+  const onAddClick = () => {
+    const nextKey = ifFilter.length
+    setFilter([...ifFilter, {
+      key: nextKey,
+      field: '',
+      operator: '',
+      value: '',
+    }])
+  }
+
+  const onRemoveClick = (key) => {
+    if (ifFilter.length !== 1) {
+      const filtered = ifFilter.filter((value) => value.key !== key)
+      setFilter(filtered)
+    }
+  }
+
+  const onIfFieldChange = (value) => {
+    const newIfFilter = ifFilter.map((currentFilter, index) => index === value.key ? value : currentFilter)
+    setFilter(newIfFilter)
+  }
+  return (
+    <>
+      {
+        ifFilter.map((ifField, index) => <IfField ifState={ifField} key={index} onAddClick={onAddClick} 
+          onIfFieldChange={onIfFieldChange}
+          onRemoveClick={onRemoveClick} />)
+      }
+    </>
+  )
+}
+
+function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
+  const { key, fieldPicked, operatorPicked, valuePicked } = ifState
+  const [valueList, setValueList] = useState([])
+  const [selectedValue, setSelectedValue] = useState(valuePicked)
+  const handleFieldPick = (e) => {
+    onIfFieldChange({ ...ifState, fieldPicked: e.target.value })
+    setValueList(FieldValueMap[e.target.value])
+    setSelectedValue('')
+  }
+
+  const handleValuePick = (e) => {
+    setSelectedValue(e.target.value)
+    onIfFieldChange({ ...ifState, valuePicked: e.target.value })
+  }
+  const handleOperatorChange = (e) => {
+    onIfFieldChange({ ...ifState, operatorPicked: e.target.value })
+  }
+  return (
+    <InputLabel className="description__search_field">
+      If
+      <TextField className="search__field__Select" select label="Field" value={fieldPicked} onChange={handleFieldPick}
+        variant="outlined">
+        {searchField.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField className="search__field__Select" select label="Operator" value={operatorPicked}
+        onChange={handleOperatorChange}
+        variant="outlined">
+        {operator.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField className="search__field__Select" select label="Value" value={selectedValue}
+        onChange={handleValuePick}
+        variant="outlined">
+        {valueList.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+      <Fab size="small" onClick={onAddClick}>
+        <i className="material-icons">add</i>
+      </Fab>
+      <Fab size="small" onClick={() => onRemoveClick(key)}>
+        <i className="material-icons">remove</i>
+      </Fab>
+    </InputLabel>
+  )
 }
