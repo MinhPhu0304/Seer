@@ -19,7 +19,7 @@ MONGO_URI=YOUR_CONNECTION_STRING_HERE
 
 To start the server run 
 ```Bash
-npm start 
+npm run start:dev
 ```
 
 To kill the process press ```CMD + C``` for Mac or press ```CTRL+ C``` 2 times for Window 
