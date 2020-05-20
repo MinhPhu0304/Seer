@@ -5,15 +5,22 @@ import seer from './seer.svg';
 import './App.css';
 import {Search} from './components/search';
 import { ArticleList } from './components/articleList';
+import { convertSearchValueToURLParam } from './utils'
 
 function App() {
+
+  const submitSearch = async (searchValue) => {
+    const queryParam = convertSearchValueToURLParam(searchValue)
+    const res = await fetch(`/search?${queryParam}`)
+    const data = await res.json()
+    console.log(data)
+  }
   return (
     <div className="App">
       <header className="App-header">
-        <Typography variant="h4" style={{ color: 'black'}}>Welcome to SEER Database</Typography>
         <img src={seer} alt="Seer logo" className="logo"/>
       </header>
-      <Search />
+      <Search submitSearch={submitSearch}/>
       <ArticleList />
     </div>
 
