@@ -58,7 +58,7 @@ export function Search(props) {
             variant="outlined"
           >
             {searchField.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
             ))}
@@ -70,7 +70,7 @@ export function Search(props) {
             variant="outlined"
           >
             {operator.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
             ))}
@@ -82,7 +82,7 @@ export function Search(props) {
             variant="outlined"
           >
             {value.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
             ))}
