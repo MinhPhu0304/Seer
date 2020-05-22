@@ -1,6 +1,9 @@
+import { omit, reduce, pickBy, isArray } from 'lodash'
+
 export function convertSearchValueToURLParam (obj) {
-  const normalizedIfField = normalizeNestingObj(obj.ifFieldValue)
-  return new URLSearchParams({ ...normalizedIfField, description: obj.description, startDate: obj.startDate, endDate: obj.endDate }).toString()
+  const flattenObject = normalizeNestingObj(obj.ifFieldValue)
+  const normalizedIfField = pickBy(flattenObject, isArray)
+  return new URLSearchParams({ ...normalizedIfField, ...omit(obj, ['ifFieldValue']) }).toString()
 }
 
 /**
@@ -21,5 +24,11 @@ function normalizeNestingObj(obj) {
     return {}
   }
 
-  return o
+  const result = reduce(o, (acc, _, key) => {
+    return { 
+      ...acc,
+      [key.toLowerCase()]: (o[key].length > 0 ? o[key] : null),
+    }
+  }, {})
+  return result
 }
