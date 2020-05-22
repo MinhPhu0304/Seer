@@ -1,5 +1,7 @@
 # Seer
 
+[![Build Status](https://travis-ci.com/MinhPhu0304/Seer.svg?branch=master)](https://travis-ci.com/MinhPhu0304/Seer)
+
 ***Requirements***
 
 - Node js
