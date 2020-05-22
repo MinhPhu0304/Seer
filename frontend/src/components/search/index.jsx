@@ -26,10 +26,11 @@ export function Search({ submitSearch }) {
   const [ifFieldValue, setIfFieldValue] = useState([])
   const onSubmit = (e) => {
     e.preventDefault()
+    // https://stackoverflow.com/questions/11704267/in-javascript-how-to-conditionally-add-a-member-to-an-object
     submitSearch({
-      description,
-      startDate,
-      endDate,
+      ...(description !== '') && { description: description },
+      ...(startDate !== '') && { startDate: startDate },
+      ...(endDate !== '') && { endDate: endDate },
       ifFieldValue
     })
   }
@@ -54,7 +55,7 @@ export function Search({ submitSearch }) {
       <form className="search__form" noValidate autoComplete="off" onSubmit={onSubmit}>
         <InputLabel className="description__search_field">
           Search for: <TextField className="search__Description_input" value={description}
-                        onChange={handleDescriptionChange} label="Description" variant="outlined" required />
+            onChange={handleDescriptionChange} label="Description" variant="outlined" required />
         </InputLabel>
         <InputLabel className="description__search_field">Date: <TextField
           label="From"
@@ -76,7 +77,7 @@ export function Search({ submitSearch }) {
             }}
           />
         </InputLabel>
-        <IfComponent onChangeIfField={onChangeIfField}/>
+        <IfComponent onChangeIfField={onChangeIfField} />
         <Button className="btn__primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
       </form>
     </div>
@@ -93,7 +94,7 @@ function IfComponent({ onChangeIfField }) {
 
   useEffect(() => {
     onChangeIfField(ifFilter)
-  }, [ifFilter])
+  }, [ifFilter, onChangeIfField])
 
   const onAddClick = () => {
     const nextKey = ifFilter.length
@@ -119,7 +120,7 @@ function IfComponent({ onChangeIfField }) {
   return (
     <>
       {
-        ifFilter.map((ifField, index) => <IfField ifState={ifField} key={index} onAddClick={onAddClick} 
+        ifFilter.map((ifField, index) => <IfField ifState={ifField} key={index} onAddClick={onAddClick}
           onIfFieldChange={onIfFieldChange}
           onRemoveClick={onRemoveClick} />)
       }
