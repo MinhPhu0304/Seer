@@ -4,7 +4,7 @@ const { Article } = require('../model');
 
 const searchRouter = express.Router();
 
-// define the home page route
+// Root router url which is URL/search
 searchRouter.get('/', async (request, response) => {
   const searchResult = await searchArticleFrom(request);
   response.json(searchResult);
@@ -12,6 +12,7 @@ searchRouter.get('/', async (request, response) => {
 
 async function searchArticleFrom(request) {
   const dbQuery = constructArticleQuery(request.query);
+  console.log(dbQuery);
   const queryResult = await Article.find(dbQuery).catch((e) => console.error(e));
   return queryResult;
 }
