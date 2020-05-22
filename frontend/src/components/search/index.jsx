@@ -38,29 +38,35 @@ export function Search({ submitSearch }) {
   return (
     <div className="search__container">
       <form className="search__form" noValidate autoComplete="off" onSubmit={onSubmit}>
-        <InputLabel className="description__search_field">
+        <InputLabel className="search__input__field">
           Search for: <TextField className="search__Description_input" value={description}
             onChange={handleDescriptionChange} label="Description" variant="outlined" required />
         </InputLabel>
-        <InputLabel className="description__search_field">
-          Date: <TextField label="From" type="date" variant="outlined"
-            onChange={handleStartDateChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField label="To" type="date" defaultValue="" variant="outlined"
-            onChange={handleEndDateChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </InputLabel>
+        <DateField handleEndDateChange={handleEndDateChange} handleStartDateChange={handleStartDateChange} />
         <IfComponent onChangeIfField={onChangeIfField} />
-        <Button className="btn__primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
+        <Button color="primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
       </form>
     </div>
   );
+}
+
+function DateField({ handleStartDateChange, handleEndDateChange }) {
+  return (
+    <InputLabel className="search__input__field">
+      Date: <TextField label="From" type="date" variant="outlined"
+        onChange={handleStartDateChange}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField label="To" type="date" variant="outlined"
+        onChange={handleEndDateChange}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </InputLabel>
+  )
 }
 
 function IfComponent({ onChangeIfField }) {
@@ -125,7 +131,7 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
     onIfFieldChange({ ...ifState, operatorPicked: e.target.value })
   }
   return (
-    <InputLabel className="description__search_field">
+    <InputLabel className="search__input__field">
       If
       <TextField className="search__field__Select" select label="Field" value={fieldPicked} onChange={handleFieldPick}
         variant="outlined">
@@ -153,11 +159,11 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
           </MenuItem>
         ))}
       </TextField>
-      <Fab size="small" onClick={onAddClick}>
+      <Fab size="small" onClick={onAddClick} color="secondary">
         <i className="material-icons">add</i>
       </Fab>
-      <Fab size="small" onClick={() => onRemoveClick(key)}>
-        <i className="material-icons">remove</i>
+      <Fab size="small" onClick={() => onRemoveClick(key)} color="secondary">
+        <i className="material-icons" >remove</i>
       </Fab>
     </InputLabel>
   )

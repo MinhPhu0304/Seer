@@ -2,17 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 24px;
 }
 .search__form {
   display: grid;
   row-gap: 16px;
 }
 
-.description__search_field {
+.search__input__field {
   display: flex;
   align-items: center;
 }
-.description__search_field > * {
+.search__input__field > * {
   margin-left: 8px;
 }
 
