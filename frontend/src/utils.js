@@ -23,8 +23,8 @@ function flattenIfFieldValue(input) {
     return {}
   }
   const nonEmptyField = omitBy(field, isEmpty)
-  return Object.keys(nonEmptyField).reduce((acc, value) => ({
-    ...acc,
+  return Object.keys(nonEmptyField).reduce((accumulatedValue, value) => ({
+    ...accumulatedValue,
     [value.toLowerCase()]: nonEmptyField[value],
   }), {})
 }
