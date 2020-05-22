@@ -1,8 +1,8 @@
 import { omit, isEmpty, omitBy } from 'lodash'
 
-export function convertSearchValueToURLParam(obj) {
-  const flattenObject = flattenIfFieldValue(obj.ifFieldValue)
-  return new URLSearchParams({ ...flattenObject, ...omit(obj, ['ifFieldValue']) }).toString()
+export function constructSearchQuery(formInput) {
+  const flattenObject = flattenIfFieldValue(formInput.ifFieldValue)
+  return new URLSearchParams({ ...flattenObject, ...omit(formInput, ['ifFieldValue']) }).toString()
 }
 
 /**
@@ -23,8 +23,8 @@ function flattenIfFieldValue(input) {
     return {}
   }
   const nonEmptyField = omitBy(field, isEmpty)
-  return Object.keys(nonEmptyField).reduce((acc, value) => ({
-    ...acc,
+  return Object.keys(nonEmptyField).reduce((accumulatedValue, value) => ({
+    ...accumulatedValue,
     [value.toLowerCase()]: nonEmptyField[value],
   }), {})
 }

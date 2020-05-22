@@ -6,10 +6,8 @@ import './index.css';
 import App from './App';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StylesProvider injectFirst>
-      <App />
-    </StylesProvider>
-  </React.StrictMode>,
+  <StylesProvider injectFirst>
+    <App />
+  </StylesProvider>,
   document.getElementById('root')
 );
