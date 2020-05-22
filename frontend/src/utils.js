@@ -1,34 +1,30 @@
-import { omit, reduce, pickBy, isArray } from 'lodash'
+import { omit, isEmpty, omitBy } from 'lodash'
 
-export function convertSearchValueToURLParam (obj) {
-  const flattenObject = normalizeNestingObj(obj.ifFieldValue)
-  const normalizedIfField = pickBy(flattenObject, isArray)
-  return new URLSearchParams({ ...normalizedIfField, ...omit(obj, ['ifFieldValue']) }).toString()
+export function convertSearchValueToURLParam(obj) {
+  const flattenObject = flattenIfFieldValue(obj.ifFieldValue)
+  return new URLSearchParams({ ...flattenObject, ...omit(obj, ['ifFieldValue']) }).toString()
 }
 
 /**
- * @param {Array} obj 
+ * @param {Object[]} input 
  */
-function normalizeNestingObj(obj) {
-  const o = { 
+function flattenIfFieldValue(input) {
+  const field = {
     Method: [],
     Methodlogy: [],
     Benefit: [],
     Participants: [],
   }
   try {
-    obj.forEach(({ fieldPicked, valuePicked}) => {
-      o[fieldPicked] = [ ...o[fieldPicked], valuePicked]
+    input.forEach(({ fieldPicked, valuePicked }) => {
+      field[fieldPicked] = [...field[fieldPicked], valuePicked]
     })
   } catch (e) {
     return {}
   }
-
-  const result = reduce(o, (acc, _, key) => {
-    return { 
-      ...acc,
-      [key.toLowerCase()]: (o[key].length > 0 ? o[key] : null),
-    }
-  }, {})
-  return result
+  const nonEmptyField = omitBy(field, isEmpty)
+  return Object.keys(nonEmptyField).reduce((acc, value) => ({
+    ...acc,
+    [value.toLowerCase()]: nonEmptyField[value],
+  }), {})
 }
