@@ -12,7 +12,7 @@ searchRouter.get('/', async (request, response) => {
 
 async function searchArticleFrom(request) {
   const dbQuery = constructArticleQuery(request.query);
-  console.log(dbQuery);
+  // eslint-disable-next-line no-console
   const queryResult = await Article.find(dbQuery).catch((e) => console.error(e));
   return queryResult;
 }

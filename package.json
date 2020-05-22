@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "start:dev": "concurrently \"nodemon server.js\" \"cd frontend && npm start\"",
-    "lint": "eslint **.js model/ --ignore-pattern frontend",
+    "lint": "eslint **.js ./model/ ./routers/ --ignore-pattern frontend",
     "lint:fix": "eslint **.js --ignore-pattern frontend --fix",
     "postinstall": "cd frontend && npm i",
     "build": "cd frontend && npm run build"
