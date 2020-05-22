@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, InputLabel, MenuItem, Fab } from '@material-ui/core';
 
-import { fieldValue as FieldValueMap, searchField, operator } from './constants'
+import { fieldValue as FieldValueMap, searchField, operator } from './constants';
+import { constructSearchQuery } from './helper';
 import './search.css';
 
 export function Search({ submitSearch }) {
@@ -12,12 +13,13 @@ export function Search({ submitSearch }) {
   const onSubmit = (e) => {
     e.preventDefault()
     // https://stackoverflow.com/questions/11704267/in-javascript-how-to-conditionally-add-a-member-to-an-object
-    submitSearch({
+    const query = constructSearchQuery({
       ...(description !== '') && { description: description },
       ...(startDate !== '') && { startDate: startDate },
       ...(endDate !== '') && { endDate: endDate },
       ifFieldValue
     })
+    submitSearch(query)
   }
 
   const onChangeIfField = (values) => {
