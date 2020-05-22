@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, InputLabel, MenuItem, Fab } from '@material-ui/core';
 
-import { fieldValue as FieldValueMap } from './constants'
+import { fieldValue as FieldValueMap, searchField, operator } from './constants'
 import './search.css';
-
-const searchField = [
-  'Method',
-  'Methodlogy',
-  'Benefit',
-  'Participants',
-]
-
-const operator = [
-  'contains',
-  'does not contain',
-  'begin with',
-  'ends with',
-  'is equal to'
-]
 
 export function Search({ submitSearch }) {
   const [description, setDescription] = useState('')
@@ -57,20 +42,14 @@ export function Search({ submitSearch }) {
           Search for: <TextField className="search__Description_input" value={description}
             onChange={handleDescriptionChange} label="Description" variant="outlined" required />
         </InputLabel>
-        <InputLabel className="description__search_field">Date: <TextField
-          label="From"
-          type="date"
-          variant="outlined"
-          onChange={handleStartDateChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-          <TextField
-            label="To"
-            type="date"
-            defaultValue=""
-            variant="outlined"
+        <InputLabel className="description__search_field">
+          Date: <TextField label="From" type="date" variant="outlined"
+            onChange={handleStartDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField label="To" type="date" defaultValue="" variant="outlined"
             onChange={handleEndDateChange}
             InputLabelProps={{
               shrink: true,
@@ -100,9 +79,9 @@ function IfComponent({ onChangeIfField }) {
     const nextKey = ifFilter.length
     setFilter([...ifFilter, {
       key: nextKey,
-      field: '',
-      operator: '',
-      value: '',
+      fieldPicked: '',
+      operatorPicked: '',
+      valuePicked: '',
     }])
   }
 
