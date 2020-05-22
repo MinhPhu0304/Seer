@@ -32,10 +32,28 @@ server.get('/search', async (request, response) => {
   response.json(searchResult);
 });
 
-// TODO: implement search with params
 async function searchArticleFrom(request) {
-  const queryResult = await Article.find();
+  const dbQuery = constructArticleQuery(request.query);
+  const queryResult = await Article.find(dbQuery).catch((e) => console.error(e));
   return queryResult;
+}
+
+function constructArticleQuery(requestQuery) {
+  const FIELD = ['method', 'methodlogy', 'benefit', 'participants'];
+  return Object.keys(requestQuery).reduce((acc, value) => {
+    if (FIELD.includes(value)) {
+      return {
+        ...acc,
+        [value]: {
+          $all: requestQuery[value].split(','),
+        },
+      };
+    }
+    return {
+      ...acc,
+      [value]: requestQuery[value],
+    };
+  }, {});
 }
 
 // eslint-disable-next-line no-console
