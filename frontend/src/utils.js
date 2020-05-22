@@ -1,25 +1,30 @@
-export function convertSearchValueToURLParam (obj) {
-  const normalizedIfField = normalizeNestingObj(obj.ifFieldValue)
-  return new URLSearchParams({ ...normalizedIfField, description: obj.description, startDate: obj.startDate, endDate: obj.endDate }).toString()
+import { omit, isEmpty, omitBy } from 'lodash'
+
+export function convertSearchValueToURLParam(obj) {
+  const flattenObject = flattenIfFieldValue(obj.ifFieldValue)
+  return new URLSearchParams({ ...flattenObject, ...omit(obj, ['ifFieldValue']) }).toString()
 }
 
 /**
- * @param {Array} obj 
+ * @param {Object[]} input 
  */
-function normalizeNestingObj(obj) {
-  const o = { 
+function flattenIfFieldValue(input) {
+  const field = {
     Method: [],
     Methodlogy: [],
     Benefit: [],
     Participants: [],
   }
   try {
-    obj.forEach(({ fieldPicked, valuePicked}) => {
-      o[fieldPicked] = [ ...o[fieldPicked], valuePicked]
+    input.forEach(({ fieldPicked, valuePicked }) => {
+      field[fieldPicked] = [...field[fieldPicked], valuePicked]
     })
   } catch (e) {
     return {}
   }
-
-  return o
+  const nonEmptyField = omitBy(field, isEmpty)
+  return Object.keys(nonEmptyField).reduce((acc, value) => ({
+    ...acc,
+    [value.toLowerCase()]: nonEmptyField[value],
+  }), {})
 }
