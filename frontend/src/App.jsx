@@ -6,16 +6,14 @@ import { Theme } from './theme'
 import { Search } from './components/search';
 import { ArticleList } from './components/articleList';
 import { CircularLoading } from './components/progress'
-import { convertSearchValueToURLParam } from './utils'
 
 function App() {
   const [articles, setArticle] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const submitSearch = async (searchValue) => {
+  const submitSearch = async (query) => {
     setIsLoading(true)
-    const queryParam = convertSearchValueToURLParam(searchValue)
-    const res = await fetch(`/search?${queryParam}`)
+    const res = await fetch(`/search?${query}`)
     const data = await res.json()
     setIsLoading(false)
     setArticle(data)
