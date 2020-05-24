@@ -39,10 +39,10 @@ export function Search({ submitSearch }) {
   }
   return (
     <div className="search__container">
-      <form className="search__form" noValidate autoComplete="off" onSubmit={onSubmit}>
+      <form className="search__form" autoComplete="off" onSubmit={onSubmit}>
         <InputLabel className="search__input__field">
           Search for: <TextField className="search__Description_input" value={description}
-            onChange={handleDescriptionChange} label="Description" variant="outlined" required />
+            onChange={handleDescriptionChange} label="Description" variant="outlined" />
         </InputLabel>
         <DateField handleEndDateChange={handleEndDateChange} handleStartDateChange={handleStartDateChange} />
         <IfComponent onChangeIfField={onChangeIfField} />
@@ -120,8 +120,13 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
   const [valueList, setValueList] = useState([])
   const [selectedValue, setSelectedValue] = useState(valuePicked)
   const handleFieldPick = (e) => {
-    onIfFieldChange({ ...ifState, fieldPicked: e.target.value })
-    setValueList(FieldValueMap[e.target.value])
+    let newFieldRowState = { ...ifState, fieldPicked: e.target.value }
+    if(e.target.value !== '') setValueList(FieldValueMap[e.target.value])
+    else {
+      setValueList([])
+      newFieldRowState = { ...newFieldRowState, operatorPicked: '' }
+    }
+    onIfFieldChange(newFieldRowState)
     setSelectedValue('')
   }
 
@@ -137,6 +142,7 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
       If
       <TextField className="search__field__Select" select label="Field" value={fieldPicked} onChange={handleFieldPick}
         variant="outlined">
+        <MenuItem value="">None</MenuItem>
         {searchField.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
@@ -145,7 +151,10 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
       </TextField>
       <TextField className="search__field__Select" select label="Operator" value={operatorPicked}
         onChange={handleOperatorChange}
+        required={fieldPicked !== ''}
+        error={fieldPicked !== '' && operatorPicked === ''}
         variant="outlined">
+        <MenuItem value="">None</MenuItem>
         {operator.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
@@ -154,7 +163,10 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
       </TextField>
       <TextField className="search__field__Select" select label="Value" value={selectedValue}
         onChange={handleValuePick}
+        required={fieldPicked !== ''}
+        error={fieldPicked !== '' && selectedValue === ''}
         variant="outlined">
+        <MenuItem value="">None</MenuItem>
         {valueList.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
@@ -165,7 +177,7 @@ function IfField({ ifState, onAddClick, onRemoveClick, onIfFieldChange }) {
         <i className="material-icons">add</i>
       </Fab>
       <Fab size="small" onClick={() => onRemoveClick(key)} color="secondary">
-        <i className="material-icons" >remove</i>
+        <i className="material-icons">remove</i>
       </Fab>
     </InputLabel>
   )

@@ -18,6 +18,7 @@
     "ignorePatterns": ["frontend/**"],
     "rules": {
         "no-use-before-define": "off",
-        "no-console": "error"
+        "no-console": "error",
+        "space-before-function-paren": "error"
     }
 }

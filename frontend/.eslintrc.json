@@ -1,4 +1,7 @@
   
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "rules": {
+    "no-spaced-func": "error"
+  }
 }
