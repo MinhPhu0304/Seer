@@ -1,6 +1,6 @@
 import { omit, isEmpty, omitBy } from 'lodash'
 
-export function constructSearchQuery(formInput) {
+export function constructSearchQuery (formInput) {
   const flattenObject = flattenIfFieldValue(formInput.ifFieldValue)
   return new URLSearchParams({ ...flattenObject, ...omit(formInput, ['ifFieldValue']) }).toString()
 }
@@ -8,7 +8,7 @@ export function constructSearchQuery(formInput) {
 /**
  * @param {Object[]} input 
  */
-function flattenIfFieldValue(input) {
+function flattenIfFieldValue (input) {
   const field = {
     Method: [],
     Methodlogy: [],
