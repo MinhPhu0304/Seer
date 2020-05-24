@@ -3,7 +3,7 @@ require('dotenv').config();
 const Express = require('express');
 const bodyParser = require('body-parser');
 
-const { searchRouter } = require('./routers');
+const { searchRouter } = require('./routes');
 const { connectToDB } = require('./dbConnection');
 
 connectToDB();
