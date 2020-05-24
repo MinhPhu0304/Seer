@@ -18,19 +18,30 @@ async function searchArticleFrom(request) {
 }
 
 function constructArticleQuery(requestQuery) {
-  const FIELD = ['method', 'methodlogy', 'benefit', 'participants'];
-  return Object.keys(requestQuery).reduce((acc, value) => {
-    if (FIELD.includes(value)) {
+  const FilterField = ['method', 'methodlogy', 'benefit', 'participants'];
+  return Object.keys(requestQuery).reduce((acc, currentIndexValue) => {
+    if (FilterField.includes(currentIndexValue)) {
+      const operatorQuery = constructFieldQueryWithOperator(requestQuery[currentIndexValue]);
       return {
         ...acc,
-        [value]: {
-          $all: requestQuery[value].split(','),
+        [currentIndexValue]: {
+          ...operatorQuery,
         },
       };
     }
     return {
       ...acc,
-      [value]: requestQuery[value],
+      [currentIndexValue]: requestQuery[currentIndexValue],
+    };
+  }, {});
+}
+
+function constructFieldQueryWithOperator(value) {
+  return value.split(',').reduce((currentFieldQuery, currentValue) => {
+    const [operator, valueFilter] = currentValue.split(':');
+    return {
+      ...currentFieldQuery,
+      [operator]: valueFilter,
     };
   }, {});
 }

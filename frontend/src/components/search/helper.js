@@ -16,8 +16,9 @@ function flattenIfFieldValue(input) {
     Participants: [],
   }
   try {
-    input.forEach(({ fieldPicked, valuePicked }) => {
-      field[fieldPicked] = [...field[fieldPicked], valuePicked]
+    input.forEach(({ fieldPicked, valuePicked, operatorPicked }) => {
+      const operator = convertOperatorToQuery(operatorPicked)
+      field[fieldPicked] = [...field[fieldPicked], `${operator}:${valuePicked}`]
     })
   } catch (e) {
     return {}
@@ -27,4 +28,13 @@ function flattenIfFieldValue(input) {
     ...accumulatedValue,
     [value.toLowerCase()]: nonEmptyField[value],
   }), {})
+}
+
+function convertOperatorToQuery (operatorPicked) {
+  const operator = {
+    'contains': '$all',
+    'does not contain': '$ne',
+    'is equal to': '$eq', 
+  }
+  return operator[operatorPicked]
 }
