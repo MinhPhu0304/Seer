@@ -15,8 +15,6 @@ const searchField = [
 const operator = [
   'contains',
   'does not contain',
-  'begin with',
-  'ends with',
   'is equal to'
 ]
 
