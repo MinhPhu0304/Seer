@@ -9,4 +9,4 @@ notifications:
 script:
   - npm run lint
   - cd ./frontend && npm run lint
-  - ccd ./frontend && npm run test
+  - cd ./frontend && npm run test
