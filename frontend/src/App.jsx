@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
-import SeerLogo from './seer.svg';
+import { Home } from './components/pages/home';
+import { Manage } from './components/pages/manage';
+import { Theme } from './theme';
 import './App.css';
-import { Theme } from './theme'
-import { Search } from './components/search';
-import { ArticleList } from './components/articleList';
-import { CircularLoading } from './components/progress'
 
 function App() {
-  const [articles, setArticle] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-
-  const submitSearch = async (query) => {
-    setIsLoading(true)
-    const res = await fetch(`/search?${query}`)
-    const data = await res.json()
-    setIsLoading(false)
-    setArticle(data)
-  }
-
   return (
     <Theme>
-      <div className="App">
-        <header className="App-header">
-          <img src={SeerLogo} alt="Seer logo" className="logo" />
-        </header>
-        <Search submitSearch={submitSearch} />
-        { isLoading && <CircularLoading />}
-        <ArticleList articles={articles} />
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/manage">
+            <Manage />
+          </Route>
+          <Route>
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     </Theme>
   );
 }
