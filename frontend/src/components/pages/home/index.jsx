@@ -11,7 +11,7 @@ export function Home() {
 
   const submitSearch = async (query) => {
     setIsLoading(true)
-    const res = await fetch(`/search?${query}`)
+    const res = await fetch(`/api/search?${query}`)
     const data = await res.json()
     setIsLoading(false)
     setArticle(data)
