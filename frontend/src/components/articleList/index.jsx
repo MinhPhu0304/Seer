@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Typography, CardContent, CardActions, Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Card, Typography, CardContent, CardActions, Button, Collapse } from '@material-ui/core';
 
 import './ArticleList.css';
 
@@ -9,14 +9,20 @@ export function ArticleList({ articles }) {
       {articles.length > 0 && <h1>Result</h1>}
       <div className="result__container">
         {
-          articles.map((article, index) => <Article key={index} article={article} />)
+          articles.map(((article) => <Article key={article._id} article={article} />))
         }
       </div>
     </div>
   );
 }
 
+const defaultShownField = ['citeKey', 'title', 'author', 'benefit', 'participants', 'methodlogy', 'method']
 function Article({ article }) {
+  const [showExtraContent, setShowExtraContent] = useState(false)
+
+  const toggleExpand = () => {
+    setShowExtraContent(!showExtraContent)
+  }
   return (
     <Card style={{ width: '50vw', marginBottom: 16 }}>
       <CardContent>
@@ -29,8 +35,20 @@ function Article({ article }) {
         <Typography variant="body1" align="left">Author: {article.author}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">More</Button>
+        <Button size="small" onClick={toggleExpand}>More</Button>
       </CardActions>
+      <Collapse in={showExtraContent} timeout="auto" unmountOnExit>
+        <CardContent>
+          {
+            Object.keys(article).map((field, key) => 
+              shouldShow(article, field) && <Typography paragraph key={`${article._id}${key}`} align="left">{field}: {article[field]}</Typography>)
+          }
+        </CardContent>
+      </Collapse>
     </Card>
   )
+}
+
+function shouldShow(article, field) {
+  return article[field] !== '' && field !== '_id' && field !== '__v' && !defaultShownField.includes(field)
 }
