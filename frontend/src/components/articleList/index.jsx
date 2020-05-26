@@ -9,7 +9,7 @@ export function ArticleList({ articles }) {
       {articles.length > 0 && <h1>Result</h1>}
       <div className="result__container">
         {
-          articles.map((article, index) => <Article key={index} article={article} />)
+          articles.map(((article) => <Article key={article._id} article={article} />))
         }
       </div>
     </div>
@@ -40,8 +40,8 @@ function Article({ article }) {
       <Collapse in={showExtraContent} timeout="auto" unmountOnExit>
         <CardContent>
           {
-            Object.keys(article).map((field) => 
-              shouldShow(article, field) && <Typography paragraph align="left">{field}: {article[field]}</Typography>)
+            Object.keys(article).map((field, key) => 
+              shouldShow(article, field) && <Typography paragraph key={`${article._id}${key}`} align="left">{field}: {article[field]}</Typography>)
           }
         </CardContent>
       </Collapse>
