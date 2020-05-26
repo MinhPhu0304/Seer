@@ -44,6 +44,10 @@ const articleSchema = new Schema({
   method: {
     type: [String],
   },
+  analyzer: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  },
   methodlogy: [String],
   benefit: [String],
   participants: [String],
