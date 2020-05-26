@@ -13,8 +13,10 @@ const PORT = process.env.PORT || 5000;
 server.use(bodyParser.json());
 server.use(Express.static(`${__dirname}/frontend/build`));
 
-server.get('/', (_, response) => response.sendFile('index.html'));
-server.use('/search', searchRouter);
+server.use('/api/search', searchRouter);
+server.get('*', (req, res) => {
+  res.sendFile(`${__dirname}/frontend/build/index.html`);
+});
 
 // eslint-disable-next-line no-console
 server.listen(PORT, () => console.log(`Server is runing on http://localhost:${PORT}`));
