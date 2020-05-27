@@ -38,13 +38,11 @@ export default function App() {
 
       case "Gender":
         setUserGender(event.target.value);
-        // console.log("Gender: " + userGender);
 
         break;
 
       case "Mobile":
         setUserMobile(event.target.value);
-        // console.log("Mobile: " + mobileNumber);
 
         break;
       default:
@@ -75,8 +73,6 @@ export default function App() {
             />
           </div>
 
-          {/* onChange={e => this.setState({ username: e.target.value })}
-        /> */}
           <br />
 
           <label className="form-label">Password: </label>
@@ -114,7 +110,6 @@ export default function App() {
               placeholder="Email Address"
               name="Email"
               onChange={changeHandler}
-              // value={emailAddress}
               required
             />
           </div>
@@ -139,7 +134,6 @@ export default function App() {
               type="number"
               placeholder="Mobile number"
               name="Mobile"
-              //  value={mobileNumber}
               required
             />
           </div>
@@ -150,13 +144,6 @@ export default function App() {
             <button onClick={clickHandler}>Register</button>
             {registerSelected && <div />}
 
-            {/* <button onClick={login}>Login</button>
-        {loginSelected && <div />} */}
-            {/* <p>
-              Already a Member? <button type="Login">Login</button>
-
-              <p> */}
-
             <p>
               Not a Member yet?{" "}
               <button type="Login" onClick={clickHandlerLogin}>
@@ -164,7 +151,6 @@ export default function App() {
               </button>
             </p>
           </center>
-          {/* {showForm === true && <Login />} */}
         </div>
       )}
     </div>

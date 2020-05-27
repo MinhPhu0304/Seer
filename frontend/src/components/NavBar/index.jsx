@@ -209,20 +209,12 @@ function LoginDialog({ open }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Login Here"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           <Login />
           </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button color="primary">
-          Disagree
-          </Button>
-        <Button color="primary" autoFocus>
-          Agree
-          </Button>
-      </DialogActions>
     </Dialog>
   )
 }

@@ -47,12 +47,8 @@ export default function Login() {
       </div>
       <center>
         <br />
-        {/* <button>Login</button> */}
-
         <button onClick={login}>Login</button>
         {loginSelected && <div />}
-
-        {/* <button onClick={clickHandler}>Register</button> */}
       </center>
     </div>
   );
