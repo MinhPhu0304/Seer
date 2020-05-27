@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, Dialog } from '@material-ui/core';
+import React, { Component, useState } from "react";
+import { Button, Dialog,DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
 import { NavLink, Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -153,62 +153,77 @@ const Navigation = styled.header`
   }
 `;
 
-class Nav extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: false,
-      openLoginDiaglog: false,
-    };
-  }
-  handleToggle(e) {
-    e.preventDefault();
-    this.setState({
-      isExpanded: !this.state.isExpanded
-    });
+function Nav() {
+  const [isExpanded, toggleIsExpanded] = useState(false)
+  const [openLoginDiaglog, toggleOpenLoginDialog] = useState(false)
+
+  const handleToggle = (event) => {
+    event.preventDefault();
+    toggleIsExpanded(!isExpanded)
   }
 
-  onLogInButtonClicked = (e) => {
-      
+  const onLogInButtonClicked = () => {
+    console.log(1)
+    toggleOpenLoginDialog(!openLoginDiaglog)
   }
-  render() {
-    const { isExpanded } = this.state;
-
-    return (
-      <Navigation>
-        <div className="logo">
-          <Link to="/">
-            <p>SEER</p>
-            <em>
-              <div className="letterhead">
-                <span className="name">
-                  Software Engineering Evidence Repository
+  return (
+    <Navigation>
+      <div className="logo">
+        <Link to="/">
+          <p>SEER</p>
+          <em>
+            <div className="letterhead">
+              <span className="name">
+                Software Engineering Evidence Repository
                 </span>
-              </div>
-            </em>
-          </Link>
-        </div>
-        <nav className="nav">
-          <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
-            <NavLink activeClassName="active" to="/">
-              <li>
-                <i  className="material-icons"
-                    aria-hidden="true"
-                    onClick={e => this.handleToggle(e)}>home</i>
+            </div>
+          </em>
+        </Link>
+      </div>
+      <nav className="nav">
+        <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
+          <NavLink activeClassName="active" to="/">
+            <li>
+              <i className="material-icons"
+                aria-hidden="true">home</i>
                 Home
               </li>
-            </NavLink>
-            <NavLink activeClassName="active" to="/about">
-              <li>about</li>
-            </NavLink>
-            <Button onClick={this.onLogInButtonClicked}>
-              Login
-            </Button>
-          </ul>
-        </nav>
-      </Navigation>
-    );
-  }
+          </NavLink>
+          <NavLink activeClassName="active" to="/about">
+            <li>about</li>
+          </NavLink>
+          <Button onClick={onLogInButtonClicked}>Login</Button>
+        </ul>
+      </nav>
+      <LoginDialog open={openLoginDiaglog} />
+    </Navigation>
+  );
+}
+
+// open: boolean
+function LoginDialog({ open }) {
+  return (
+    <Dialog
+      open={open}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          FORMHERE
+          </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button color="primary">
+          Disagree
+          </Button>
+        <Button color="primary" autoFocus>
+          Agree
+          </Button>
+      </DialogActions>
+    </Dialog>
+  )
 }
 
 export default Nav;
