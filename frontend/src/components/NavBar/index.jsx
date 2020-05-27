@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, Dialog } from '@material-ui/core';
 import { NavLink, Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -53,7 +54,7 @@ const Navigation = styled.header`
     transition: all 0.6s;
     color: #222;
     font-size: 1em;
-  }
+  } 
   a:hover {
     opacity: 1;
   }
@@ -156,7 +157,8 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isExpanded: false
+      isExpanded: false,
+      openLoginDiaglog: false,
     };
   }
   handleToggle(e) {
@@ -164,6 +166,10 @@ class Nav extends Component {
     this.setState({
       isExpanded: !this.state.isExpanded
     });
+  }
+
+  onLogInButtonClicked = (e) => {
+      
   }
   render() {
     const { isExpanded } = this.state;
@@ -183,21 +189,21 @@ class Nav extends Component {
           </Link>
         </div>
         <nav className="nav">
-          <i
-            className="fa fa-bars"
-            aria-hidden="true"
-            onClick={e => this.handleToggle(e)}
-          />
           <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
             <NavLink activeClassName="active" to="/">
-              <li>home</li>
+              <li>
+                <i  className="material-icons"
+                    aria-hidden="true"
+                    onClick={e => this.handleToggle(e)}>home</i>
+                Home
+              </li>
             </NavLink>
             <NavLink activeClassName="active" to="/about">
               <li>about</li>
             </NavLink>
-            <NavLink activeClassName="active" to="/Login">
-              <li>Login</li>
-            </NavLink>
+            <Button onClick={this.onLogInButtonClicked}>
+              Login
+            </Button>
           </ul>
         </nav>
       </Navigation>
