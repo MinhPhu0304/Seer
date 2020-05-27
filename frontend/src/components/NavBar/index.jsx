@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Button, Dialog,DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
 import { NavLink, Link } from "react-router-dom";
-import Login from "../components/LoginForm";
+import Login from '../LoginForm';
 
 import styled from "styled-components";
 
