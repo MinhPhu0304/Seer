@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const user = new Schema({
   email: String, // used for log in
@@ -18,6 +18,7 @@ const user = new Schema({
   savedSearchs: [String],
 });
 
+const userModel = model('user', user);
 module.exports = {
-  user,
+  userModel,
 };

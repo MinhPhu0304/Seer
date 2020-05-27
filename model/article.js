@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 
+const { userModel } = require('./user');
+
 const articleSchema = new Schema({
   citeKey: {
     type: String,
@@ -46,7 +48,7 @@ const articleSchema = new Schema({
   },
   analyzer: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    ref: userModel.name,
   },
   methodlogy: [String],
   benefit: [String],
