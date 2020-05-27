@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import { Button, Dialog,DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
 import { NavLink, Link } from "react-router-dom";
+import Login from "../components/LoginForm";
 
 import styled from "styled-components";
 
@@ -211,7 +212,7 @@ function LoginDialog({ open }) {
       <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          FORMHERE
+          <Login />
           </DialogContentText>
       </DialogContent>
       <DialogActions>
