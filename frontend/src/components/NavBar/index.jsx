@@ -164,7 +164,6 @@ function Nav() {
   }
 
   const onLogInButtonClicked = () => {
-    console.log(1)
     toggleOpenLoginDialog(!openLoginDiaglog)
   }
   return (
@@ -196,16 +195,20 @@ function Nav() {
           <Button onClick={onLogInButtonClicked}>Login</Button>
         </ul>
       </nav>
-      <LoginDialog open={openLoginDiaglog} />
+      <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked}/>
     </Navigation>
   );
 }
 
 // open: boolean
-function LoginDialog({ open }) {
+function LoginDialog({ open, toggleOpen }) {
+  const handleClose = () => {
+    toggleOpen(!open)
+  }
   return (
     <Dialog
       open={open}
+      onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
