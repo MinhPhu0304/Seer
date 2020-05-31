@@ -4,6 +4,8 @@ import { NavLink, Link } from "react-router-dom";
 import Login from '../LoginForm';
 
 import styled from "styled-components";
+import styles from "./LoginForm/styles.css"
+import ValidatedLoginForm from "../LoginForm/ValidatedLoginForm";
 
 const Navigation = styled.header`
   width: 100%;
@@ -215,7 +217,7 @@ function LoginDialog({ open, toggleOpen }) {
       <DialogTitle id="alert-dialog-title">{"Login Here"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          <Login />
+          <ValidatedLoginForm/>
           </DialogContentText>
       </DialogContent>
     </Dialog>
