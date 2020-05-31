@@ -4,7 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import Login from '../LoginForm';
 
 import styled from "styled-components";
-import styles from "./LoginForm/styles.css"
+import "../LoginForm/styles.css"
 import ValidatedLoginForm from "../LoginForm/ValidatedLoginForm";
 
 const Navigation = styled.header`
