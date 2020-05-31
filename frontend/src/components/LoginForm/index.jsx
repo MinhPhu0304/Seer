@@ -1,5 +1,7 @@
 import React from "react";
-import Login from "./login"; 
+import {Button } from '@material-ui/core'
+
+import Login from './ValidatedLoginForm'
 
 export default function App() {
   const [showForm, setShowForm] = React.useState(false);
@@ -55,9 +57,9 @@ export default function App() {
       {showForm === false && <Login />}
       <p>
         Not a Member yet?{" "}
-        <button type="Login" onClick={clickHandler}>
+        <Button type="Login" onClick={clickHandler}>
           Register
-        </button>
+        </Button>
       </p>
       {showForm === true && (
         <div>
@@ -141,14 +143,14 @@ export default function App() {
           <br />
 
           <center>
-            <button onClick={clickHandler}>Register</button>
+            <Button onClick={clickHandler}>Register</Button>
             {registerSelected && <div />}
 
             <p>
               Not a Member yet?{" "}
-              <button type="Login" onClick={clickHandlerLogin}>
+              <Button type="Login" onClick={clickHandlerLogin}>
                 Login
-              </button>
+              </Button>
             </p>
           </center>
         </div>

@@ -1,5 +1,7 @@
 import React from "react";
-import "./styles.css";
+import { Button, Input } from '@material-ui/core'
+
+import LoginForm from './ValidatedLoginForm'
 
 export class login extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ export class login extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Email
-          <input
+          <Input
             name="email"
             type="text"
             placeholder="Enter your email"
@@ -42,7 +44,7 @@ export class login extends React.Component {
         </label>
         <label>
           Password
-          <input
+          <Input
             name="password"
             type="password"
             placeholder="Enter your password"
@@ -50,9 +52,8 @@ export class login extends React.Component {
             onChange={this.handleChange}
           />
         </label>
-        <button type="submit">Login</button>
+        <Button type="submit">Login</Button>
       </form>
-      // <h1>Email entered:{this.state.email}</h1>
     );
   }
 }
