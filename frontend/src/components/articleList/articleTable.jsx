@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sortBy } from 'lodash'
+import { orderBy } from 'lodash'
 import {
   TableCell, TableRow, TableBody, TableHead, TableSortLabel,
   Table, TableContainer, Paper, IconButton, Collapse, Box, Typography
@@ -45,7 +45,7 @@ function ExtraInfor({ row }) {
     <>
       {
         Object.keys(row).map(field => {
-          return !defaultShownField.includes(field) && row[field] != '' ? <Typography>{field}: {row[field]}</Typography> : null
+          return !defaultShownField.includes(field) && row[field] !== '' ? <Typography>{field}: {row[field]}</Typography> : null
         })
       }
     </>
@@ -54,9 +54,12 @@ function ExtraInfor({ row }) {
 
 export default function ArticlesTable({ articles }) {
   const [sortedArticle, setSortedArticle] = useState(articles)
+  const [ascSort, toggleAscSort] = useState(true)
   const handleSortBy = (sortLabel) => () => {
-    setSortedArticle(sortBy(sortedArticle, [sortLabel]))
+    toggleAscSort(!ascSort)
+    setSortedArticle(orderBy(sortedArticle, [sortLabel], [!ascSort ? 'asc' : 'desc']))
   }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -92,7 +95,7 @@ export default function ArticlesTable({ articles }) {
         </TableHead>
         <TableBody>
           {sortedArticle.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row._id} row={row} />
           ))}
         </TableBody>
       </Table>
