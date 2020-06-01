@@ -8,7 +8,7 @@ import {
 import { Provider } from 'react-redux';
 
 // Our own components
-import Nav from './components/NavBar';
+import { NavigationBar } from './components/NavBar';
 import { Home } from './components/pages/home';
 import { Manage } from './components/pages/manage';
 import About from './components/pages/About';
@@ -21,7 +21,7 @@ function App() {
     <Provider store={store}>
       <Theme>
         <Router>
-          <Nav />
+          <NavigationBar />
           <Switch>
             <Route exact path="/manage">
               <Manage />

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
 
 import Login from '../LoginForm';
 import './navBar.css';
@@ -64,11 +65,26 @@ const Navigation = styled.header`
   }
 `;
 
-function Nav() {
+export const NavigationBar = connect(mapStateToProps)(NavigationView)
+
+function mapStateToProps ({ session }) {
+  return {
+    session
+  }
+}
+
+function NavigationView({ session }) {
   const [openLoginDiaglog, toggleOpenLoginDialog] = useState(false)
   const onLogInButtonClicked = () => {
     toggleOpenLoginDialog(!openLoginDiaglog)
   }
+
+  useEffect(() => {
+    toggleOpenLoginDialog(false)
+  }, [session])
+
+  const handleLogout = () => window.location.reload() // TODO: something better than reload when we implement cookies
+
   return (
     <Navigation>
       <HomeLogoLink />
@@ -76,7 +92,8 @@ function Nav() {
         <div className="collapsed">
           <HomeLink />
           <AboutLink />
-          <Button onClick={onLogInButtonClicked}>Login</Button>
+          { !session.authenticated && <Button onClick={onLogInButtonClicked}>Login</Button>}
+          { session.authenticated && <Button onClick={handleLogout}>Logout</Button> }
         </div>
       </nav>
       <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked} />
@@ -142,5 +159,3 @@ function LoginDialog({ open, toggleOpen }) {
     </Dialog>
   )
 }
-
-export default Nav;
