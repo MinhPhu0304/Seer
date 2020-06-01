@@ -3,6 +3,8 @@ import { Button, TextField } from '@material-ui/core'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import { dispatcher } from '../../store'
+import { setLogedIn } from '../../actions/meAction'
 import "./loginForm.css"
 
 const initialFormValues = {
@@ -75,7 +77,7 @@ export default function ValidatedLoginForm() {
 async function logInWithCredential(email, password) {
   const response = await fetch('/api/user', constructFetchConfig(email, password));
   const body = await response.json();
-  console.log(body);
+  dispatcher(setLogedIn(body));
 }
 
 function constructFetchConfig(email, password) {
