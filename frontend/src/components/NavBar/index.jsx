@@ -1,14 +1,12 @@
 import React, { Component, useState } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Login from '../LoginForm';
 
 import styled from "styled-components";
 import "../LoginForm/styles.css"
-import ValidatedLoginForm from "../LoginForm/ValidatedLoginForm";
 
 const Navigation = styled.header`
-  width: 100%;
   border-bottom: 10px solid #222;
   z-index: 1;
   display: flex;
@@ -183,19 +181,17 @@ function Nav() {
         </Link>
       </div>
       <nav className="nav">
-        <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
-          <NavLink activeClassName="active" to="/">
-            <li>
-              <i className="material-icons"
-                aria-hidden="true">home</i>
+        <div className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
+          <Link activeClassName="active" to="/">
+            <i className="material-icons"
+              aria-hidden="true">home</i>
                 Home
-              </li>
-          </NavLink>
-          <NavLink activeClassName="active" to="/about">
-            <li>about</li>
-          </NavLink>
+          </Link>
+          <Link activeClassName="active" to="/about">
+            about
+          </Link>
           <Button onClick={onLogInButtonClicked}>Login</Button>
-        </ul>
+        </div>
       </nav>
       <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked} />
     </Navigation>
