@@ -14,7 +14,7 @@ userRouter.post('/', async (request, response) => {
     return response.status(404);
   }
   if (bcrypt.compareSync(body.password, result[0].password)) {
-    return response.json(omit(['password', '__v'], result));
+    return response.json(omit(['password', '__v'], result[0].toJSON()));
   }
   return response.status(403);
 });
