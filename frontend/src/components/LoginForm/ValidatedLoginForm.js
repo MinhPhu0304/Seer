@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, TextField } from '@material-ui/core'
+import React, { useState } from "react";
+import { Button, TextField, CircularProgress } from '@material-ui/core'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -13,12 +13,23 @@ const initialFormValues = {
 }
 
 export default function ValidatedLoginForm() {
+  const [isLoading, setIsWaiting] = useState(false)
+  const [errorText, setErrorText] = useState(null)
+  const handleSubmit = async (values) => {
+    setIsWaiting(true)
+    const logedIn = await logInWithCredential(values.email, values.password)
+    if (!logedIn) {
+      setErrorText('Incorrect Email/ Password');
+    } else {
+      setErrorText(null)
+    }
+    setIsWaiting(false)
+  }
+
   return (
     <Formik
       initialValues={initialFormValues}
-      onSubmit={(values, { setSubmitting }) => {
-        logInWithCredential(values.email, values.password)
-      }}
+      onSubmit={handleSubmit}
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email()
@@ -50,7 +61,7 @@ export default function ValidatedLoginForm() {
               value={values.email}
               onChange={handleChange}
               error={errors.email && touched.email}
-              helperText={errors.email}
+              helperText={errors.email || errorText}
               onBlur={handleBlur}
             />
             <TextField
@@ -61,13 +72,14 @@ export default function ValidatedLoginForm() {
               value={values.password}
               onChange={handleChange}
               error={errors.password && touched.password}
-              helperText={errors.password}
+              helperText={errors.password || errorText}
               label="Password"
               onBlur={handleBlur}
             />
-            <Button color="primary" variant="contained" type="submit" disabled={isSubmitting}>
+            <Button disabled={isLoading} color="primary" variant="contained" type="submit" disabled={isSubmitting}>
               Login
-          </Button>
+            </Button>
+            { isLoading && <CircularProgress />}
           </form>
         );
       }}
@@ -76,13 +88,16 @@ export default function ValidatedLoginForm() {
 
 async function logInWithCredential(email, password) {
   const response = await fetch('/api/user', constructFetchConfig(email, password));
+  console.log(response)
+  if (!response.ok) return false;
   const body = await response.json();
   dispatcher(setLogedIn(body));
+  return true;
 }
 
 function constructFetchConfig(email, password) {
   return {
-    body: JSON.stringify({ email, password}),
+    body: JSON.stringify({ email, password }),
     headers: {
       'Content-Type': 'application/json'
     },

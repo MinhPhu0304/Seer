@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
-import { Link } from "react-router-dom";
-import Login from '../LoginForm';
-
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import Login from '../LoginForm';
 import './navBar.css';
 
 const Navigation = styled.header`
