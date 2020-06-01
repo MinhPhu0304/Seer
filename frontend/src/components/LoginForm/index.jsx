@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Button, TextField } from '@material-ui/core'
 
 import Login from './ValidatedLoginForm'
+import { dispatcher } from '../../store'
+import { setLogedIn } from '../../actions/meAction'
 
 export default function LoginForm() {
   const [signUp, setShowSignUp] = useState(false);
   const [email, setUserEmail] = useState("");
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [userGender, setUserGender] = useState("");
-  const [mobileNumber, setUserMobile] = useState("");
 
   const clickHandler = event => {
     setShowSignUp(true);
@@ -23,22 +23,13 @@ export default function LoginForm() {
       email,
       name,
       password,
-      userGender,
-      mobileNumber,
     })
   }
 
   const changeHandler = event => {
-
     switch (event.target.name) {
       case "Email":
         setUserEmail(event.target.value);
-        break;
-      case "Gender":
-        setUserGender(event.target.value);
-        break;
-      case "Mobile":
-        setUserMobile(event.target.value);
         break;
       case "Password":
         setPassword(event.target.value)
@@ -111,29 +102,6 @@ export default function LoginForm() {
               />
             </div>
             <br />
-            <label className="form-label">Gender: </label>
-            <div className="form-content">
-              <select name="Gender" value={userGender} onChange={changeHandler}>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-
-            <br />
-            <label className="form-label">Mobile: </label>
-            <div className="form-content">
-              <TextField
-                type="tel"
-                variant="outlined"
-                label="Phone number"
-                name="Mobile"
-                value={mobileNumber}
-                onChange={changeHandler}
-                required
-              />
-            </div>
-
-            <br />
             <center>
               <Button color="primary" type="submit" onClick={signUpHandler}>Register</Button>
               <p>
@@ -145,7 +113,6 @@ export default function LoginForm() {
             </center>
           </form>
         </div>
-
       )}
     </div>
   );
@@ -154,7 +121,7 @@ export default function LoginForm() {
 async function sendSignUpRequest (signUpData) {
   const response = await fetch('/api/user/new', getRequestConfig(signUpData))
   const body = await response.json()
-  console.log(body)
+  dispatcher(setLogedIn(body))
 }
 
 function getRequestConfig (signUpData) {

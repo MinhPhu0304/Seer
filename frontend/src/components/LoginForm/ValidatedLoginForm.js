@@ -15,7 +15,7 @@ const initialFormValues = {
 export default function ValidatedLoginForm() {
   const [isLoading, setIsWaiting] = useState(false)
   const [errorText, setErrorText] = useState(null)
-  const handleSubmit = async (values) => {
+  const handleFormikSubmit = async (values) => {
     setIsWaiting(true)
     const logedIn = await logInWithCredential(values.email, values.password)
     if (!logedIn) {
@@ -29,7 +29,7 @@ export default function ValidatedLoginForm() {
   return (
     <Formik
       initialValues={initialFormValues}
-      onSubmit={handleSubmit}
+      onSubmit={handleFormikSubmit}
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email()
