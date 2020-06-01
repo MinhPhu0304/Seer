@@ -1,9 +1,11 @@
 import React, { Component, useState } from "react";
-import { Button, Dialog,DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
 import { NavLink, Link } from "react-router-dom";
 import Login from '../LoginForm';
 
 import styled from "styled-components";
+import "../LoginForm/styles.css"
+import ValidatedLoginForm from "../LoginForm/ValidatedLoginForm";
 
 const Navigation = styled.header`
   width: 100%;
@@ -195,7 +197,7 @@ function Nav() {
           <Button onClick={onLogInButtonClicked}>Login</Button>
         </ul>
       </nav>
-      <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked}/>
+      <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked} />
     </Navigation>
   );
 }
@@ -212,11 +214,11 @@ function LoginDialog({ open, toggleOpen }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Login Here"}</DialogTitle>
+      <DialogTitle>Log in</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           <Login />
-          </DialogContentText>
+        </DialogContentText>
       </DialogContent>
     </Dialog>
   )

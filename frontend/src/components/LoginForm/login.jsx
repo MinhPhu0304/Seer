@@ -1,55 +1,60 @@
 import React from "react";
+import { Button, Input } from '@material-ui/core'
 
-export default function Login() {
-  const [loginSelected, setLoginForm] = React.useState(false);
-  const [userName, setUserName] = React.useState("");
-  const [passWord, setPassword] = React.useState("");
+import LoginForm from './ValidatedLoginForm'
 
-  const login = () => {
-    console.log("username: " + userName);
-    console.log("Password: " + passWord);
-  };
+export class login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    };
 
-  const changeHandler = event => {
-    if (event.target.name === "Username") {
-      setUserName(event.target.value);
-    } else {
-      setPassword(event.target.value);
-    }
-  };
+    //binding event handlers
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  const clickHandler = event => {
-    setLoginForm(true);
-  };
+  //event handler to handle the entered values
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
 
-  return (
-    <div>
-      <label className="form-label">Username: </label>
-      <div className="form-content">
-        <input
-          type="text"
-          placeholder="Enter Username"
-          name="Username"
-          onChange={changeHandler}
-          required
-        />
-      </div>
+  handleSubmit(event) {
+    console.log("Submitting");
+    console.log(this.state);
+  }
 
-      <label className="form-label">Password: </label>
-      <div className="form-content">
-        <input
-          type="password"
-          placeholder="Enter Password"
-          name="Password"
-          onChange={changeHandler}
-          required
-        />
-      </div>
-      <center>
-        <br />
-        <button onClick={login}>Login</button>
-        {loginSelected && <div />}
-      </center>
-    </div>
-  );
+  render() {
+    // const { email, password } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Email
+          <Input
+            name="email"
+            type="text"
+            placeholder="Enter your email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+        </label>
+        <label>
+          Password
+          <Input
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+        </label>
+        <Button type="submit">Login</Button>
+      </form>
+    );
+  }
 }
+export default login;
