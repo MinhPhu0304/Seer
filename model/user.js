@@ -1,9 +1,19 @@
 const { Schema, model } = require('mongoose');
 
 const user = new Schema({
-  email: String, // used for log in
-  password: String,
-  name: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
   role: {
     type: [String],
     enum: ['admin', 'analyzer', 'submitter', 'searcher'],
