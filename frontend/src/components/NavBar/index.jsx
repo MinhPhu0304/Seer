@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { connect } from 'react-redux'
 
 import Login from '../LoginForm';
@@ -120,7 +120,7 @@ function HomeLogoLink() {
 
 function HomeLink() {
   return (
-    <Link active className="active Container__align_center" to="/">
+    <Link className="active Container__align_center" to="/">
       <i className="material-icons" aria-hidden="true" style={{ paddingRight: 4}}>
         home
       </i>
@@ -131,12 +131,12 @@ function HomeLink() {
 
 function AboutLink() {
   return (
-    <Link active className="active Container__align_center" to="/about">
+    <NavLink activeStyle={{ color: '#66BB6A' }} className="active Container__align_center" to="/about">
       <i className="material-icons" aria-hidden="true" style={{ paddingRight: 4}}>
         info
       </i>
       about
-    </Link>
+    </NavLink>
   )
 }
 

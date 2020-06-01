@@ -76,7 +76,7 @@ export default function ValidatedLoginForm() {
               label="Password"
               onBlur={handleBlur}
             />
-            <Button disabled={isLoading} color="primary" variant="contained" type="submit" disabled={isSubmitting}>
+            <Button color="primary" variant="contained" type="submit" disabled={isSubmitting || isLoading}>
               Login
             </Button>
             { isLoading && <CircularProgress />}
