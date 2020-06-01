@@ -5,5 +5,11 @@
 .collapsed { 
   display: flex;
   justify-content: space-around;
-  align-items: baseline;
+  align-items: center;
+}
+
+.Container__align_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

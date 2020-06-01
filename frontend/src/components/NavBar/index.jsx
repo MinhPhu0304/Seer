@@ -13,8 +13,8 @@ const Navigation = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0px 100px 0;
-  height: 140px;
-  margin-bottom: 60px;
+  height: 70px;
+  margin-bottom: 18px;
   background: #f8f8f8;
 
   .logoNav a {
@@ -109,9 +109,10 @@ function HomeLogoLink() {
 
 function HomeLink() {
   return (
-    <Link activeClassName="active" to="/">
-      <i className="material-icons"
-        aria-hidden="true">home</i>
+    <Link active className="active Container__align_center" to="/">
+      <i className="material-icons" aria-hidden="true" style={{ paddingRight: 4}}>
+        home
+      </i>
       Home
     </Link>
   )
@@ -119,8 +120,8 @@ function HomeLink() {
 
 function AboutLink() {
   return (
-    <Link activeClassName="active" to="/about">
-      <i className="material-icons" aria-hidden="true">
+    <Link active className="active Container__align_center" to="/about">
+      <i className="material-icons" aria-hidden="true" style={{ paddingRight: 4}}>
         info
       </i>
       about
