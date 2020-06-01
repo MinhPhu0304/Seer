@@ -65,13 +65,7 @@ const Navigation = styled.header`
 `;
 
 function Nav() {
-  const [isExpanded, toggleIsExpanded] = useState(false)
   const [openLoginDiaglog, toggleOpenLoginDialog] = useState(false)
-
-  const handleToggle = (event) => {
-    toggleIsExpanded(!isExpanded)
-  }
-
   const onLogInButtonClicked = () => {
     toggleOpenLoginDialog(!openLoginDiaglog)
   }
@@ -79,7 +73,7 @@ function Nav() {
     <Navigation>
       <HomeLogoLink />
       <nav className="nav">
-        <div className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
+        <div className="collapsed">
           <HomeLink />
           <AboutLink />
           <Button onClick={onLogInButtonClicked}>Login</Button>
@@ -139,7 +133,7 @@ function LoginDialog({ open, toggleOpen }) {
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>Log in</DialogTitle>
+      <DialogTitle>Welcome</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Login />

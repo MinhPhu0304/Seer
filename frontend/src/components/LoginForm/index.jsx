@@ -1,51 +1,32 @@
 import React from "react";
-import {Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 
 import Login from './ValidatedLoginForm'
 
-export default function App() {
-  const [showForm, setShowForm] = React.useState(false);
-  const [registerSelected] = React.useState(false);
-  const [userName, setUserName] = React.useState("");
+export default function LoginForm() {
+  const [signUp, setShowSignUp] = React.useState(false);
   const [emailAddress, setUserEmail] = React.useState("");
   const [userGender, setUserGender] = React.useState("");
   const [mobileNumber, setUserMobile] = React.useState("");
 
   const clickHandler = event => {
-    setShowForm(true);
+    setShowSignUp(true);
   };
   const clickHandlerLogin = event => {
-    setShowForm(false);
+    setShowSignUp(false);
   };
 
-  // Display the results
-  const submit = () => {
-    console.log("Username: " + userName);
-    console.log("Email: " + emailAddress);
-    console.log("Gender: " + userGender);
-    console.log("Mobile: " + mobileNumber);
-  };
   const changeHandler = event => {
 
     switch (event.target.name) {
-      case "Username":
-        setUserName(event.target.value);
-
-        break;
-
-
       case "Email":
         setUserEmail(event.target.value);
         break;
-
       case "Gender":
         setUserGender(event.target.value);
-
         break;
-
       case "Mobile":
         setUserMobile(event.target.value);
-
         break;
       default:
         break;
@@ -54,29 +35,27 @@ export default function App() {
 
   return (
     <div>
-      {showForm === false && <Login />}
-      <p>
-        Not a Member yet?{" "}
-        <Button color="primary" type="Login" onClick={clickHandler}>
+      {signUp === false && <Login />}
+      {signUp === false && <p>
+        Not a Member yet?
+        <Button color="primary" onClick={clickHandler}>
           Register
         </Button>
-      </p>
-      {showForm === true && (
+      </p>}
+      {signUp === true && (
         <div>
-          <label className="form-label">Username: </label>
+          <label className="form-label">Email: </label>
           <div className="form-content">
             <input
-              type="text"
-              placeholder="Enter Username"
-              name="Username"
+              type="email"
+              placeholder="Email Address"
+              name="Email"
+              value={emailAddress}
               onChange={changeHandler}
-              //  value={userName}
               required
             />
           </div>
-
           <br />
-
           <label className="form-label">Password: </label>
           <div className="form-content">
             <input
@@ -84,12 +63,9 @@ export default function App() {
               placeholder="Enter Password"
               name="Password"
               onChange={changeHandler}
-              //  value={passWord}
               required
             />
           </div>
-          {/* onChange={e => this.setState({ password: e.target.value })}
-        /> */}
           <br />
 
           <label className="form-label">Password: </label>
@@ -105,50 +81,34 @@ export default function App() {
 
           <br />
 
-          <label className="form-label">Email: </label>
-          <div className="form-content">
-            <input
-              type="email"
-              placeholder="Email Address"
-              name="Email"
-              onChange={changeHandler}
-              required
-            />
-          </div>
-
-          <br />
 
           <label className="form-label">Gender: </label>
           <div className="form-content">
-            <select>
+            <select name="Gender" value={userGender} onChange={changeHandler}>
               <option>Male</option>
               <option>Female</option>
             </select>
           </div>
 
           <br />
-
-          {/* Add country code etc using options and select tag */}
-
           <label className="form-label">Mobile: </label>
           <div className="form-content">
             <input
-              type="number"
+              type="tel"
               placeholder="Mobile number"
               name="Mobile"
+              value={mobileNumber}
+              onChange={changeHandler}
               required
             />
           </div>
 
           <br />
-
           <center>
             <Button color="primary" onClick={clickHandler}>Register</Button>
-            {registerSelected && <div />}
-
             <p>
-              Not a Member yet?{" "}
-              <Button color="primary" type="Login" onClick={clickHandlerLogin}>
+              Want to log in instead ?
+              <Button color="primary" onClick={clickHandlerLogin}>
                 Login
               </Button>
             </p>
