@@ -3,7 +3,7 @@ require('dotenv').config();
 const Express = require('express');
 const bodyParser = require('body-parser');
 
-const { searchRouter, userRouter } = require('./routes');
+const { articleRouter, searchRouter, userRouter } = require('./routes');
 const { connectToDB } = require('./dbConnection');
 
 connectToDB();
@@ -14,6 +14,7 @@ server.use(bodyParser.json());
 server.use(Express.static(`${__dirname}/frontend/build`));
 
 server.use('/api/search', searchRouter);
+server.use('/api/article', articleRouter);
 server.use('/api/user', userRouter);
 server.get('*', (req, res) => {
   res.sendFile(`${__dirname}/frontend/build/index.html`);

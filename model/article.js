@@ -59,6 +59,7 @@ const articleSchema = new Schema({
 });
 
 const articleModel = model('Article', articleSchema);
+
 module.exports = {
   articleModel,
 };
