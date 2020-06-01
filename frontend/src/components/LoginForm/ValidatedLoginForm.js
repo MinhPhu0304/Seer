@@ -10,15 +10,12 @@ const initialFormValues = {
   password: '',
 }
 
-function ValidatedLoginForm() {
+export default function ValidatedLoginForm() {
   return (
     <Formik
       initialValues={initialFormValues}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log("Logging in", values);
-          setSubmitting(false);
-        }, 500);
+        logInWithCredential(values.email, values.password)
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -75,4 +72,18 @@ function ValidatedLoginForm() {
     </Formik>)
 }
 
-export default ValidatedLoginForm;
+async function logInWithCredential(email, password) {
+  const response = await fetch('/api/user', constructFetchConfig(email, password));
+  const body = await response.json();
+  console.log(body);
+}
+
+function constructFetchConfig(email, password) {
+  return {
+    body: JSON.stringify({ email, password}),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  }
+}

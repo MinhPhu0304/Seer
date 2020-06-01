@@ -5,7 +5,8 @@ import Login from './ValidatedLoginForm'
 
 export default function LoginForm() {
   const [signUp, setShowSignUp] = useState(false);
-  const [emailAddress, setUserEmail] = useState("");
+  const [email, setUserEmail] = useState("");
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [userGender, setUserGender] = useState("");
   const [mobileNumber, setUserMobile] = useState("");
@@ -16,6 +17,16 @@ export default function LoginForm() {
   const clickHandlerLogin = event => {
     setShowSignUp(false);
   };
+  const signUpHandler = (e) => {
+    e.preventDefault()
+    sendSignUpRequest({
+      email,
+      name,
+      password,
+      userGender,
+      mobileNumber,
+    })
+  }
 
   const changeHandler = event => {
 
@@ -31,6 +42,9 @@ export default function LoginForm() {
         break;
       case "Password":
         setPassword(event.target.value)
+        break;
+      case "Name":
+        setName(event.target.value)
         break;
       default:
         break;
@@ -51,11 +65,23 @@ export default function LoginForm() {
           <form>
             <div className="form-content">
               <TextField
+                type="text"
+                label="Name"
+                name="Name"
+                variant="outlined"
+                value={name}
+                onChange={changeHandler}
+                required
+              />
+            </div>
+            <br />
+            <div className="form-content">
+              <TextField
                 type="email"
                 label="Email"
                 name="Email"
                 variant="outlined"
-                value={emailAddress}
+                value={email}
                 onChange={changeHandler}
                 required
               />
@@ -109,7 +135,7 @@ export default function LoginForm() {
 
             <br />
             <center>
-              <Button color="primary" type="submit" onClick={clickHandler}>Register</Button>
+              <Button color="primary" type="submit" onClick={signUpHandler}>Register</Button>
               <p>
                 Want to log in instead ?
               <Button color="primary" onClick={clickHandlerLogin}>
@@ -123,4 +149,20 @@ export default function LoginForm() {
       )}
     </div>
   );
+}
+
+async function sendSignUpRequest (signUpData) {
+  const response = await fetch('/api/user/new', getRequestConfig(signUpData))
+  const body = await response.json()
+  console.log(body)
+}
+
+function getRequestConfig (signUpData) {
+  return {
+    body: JSON.stringify(signUpData),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  }
 }
