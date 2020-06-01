@@ -57,7 +57,7 @@ export default function App() {
       {showForm === false && <Login />}
       <p>
         Not a Member yet?{" "}
-        <Button type="Login" onClick={clickHandler}>
+        <Button color="primary" type="Login" onClick={clickHandler}>
           Register
         </Button>
       </p>
@@ -143,12 +143,12 @@ export default function App() {
           <br />
 
           <center>
-            <Button onClick={clickHandler}>Register</Button>
+            <Button color="primary" onClick={clickHandler}>Register</Button>
             {registerSelected && <div />}
 
             <p>
               Not a Member yet?{" "}
-              <Button type="Login" onClick={clickHandlerLogin}>
+              <Button color="primary" type="Login" onClick={clickHandlerLogin}>
                 Login
               </Button>
             </p>
