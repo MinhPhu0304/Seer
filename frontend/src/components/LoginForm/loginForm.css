@@ -1,0 +1,7 @@
+
+.login__container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  row-gap: 16px;
+}

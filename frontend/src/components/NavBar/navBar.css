@@ -1,0 +1,15 @@
+.nav {
+  min-width: 300px;
+}
+
+.collapsed { 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Container__align_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
