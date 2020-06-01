@@ -1,10 +1,10 @@
-import React, { Component, useState } from "react";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@material-ui/core';
+import React, { useState } from "react";
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Login from '../LoginForm';
 
 import styled from "styled-components";
-import "../LoginForm/styles.css"
+import './navBar.css';
 
 const Navigation = styled.header`
   border-bottom: 10px solid #222;
@@ -17,7 +17,7 @@ const Navigation = styled.header`
   margin-bottom: 60px;
   background: #f8f8f8;
 
-  .logo a {
+  .logoNav a {
     padding-top: 33px;
     display: flex;
     flex-direction: column;
@@ -46,9 +46,6 @@ const Navigation = styled.header`
       }
     }
   }
-  .gray {
-    color: #ccc;
-  }
   a {
     color: #222;
     opacity: 0.55;
@@ -59,30 +56,10 @@ const Navigation = styled.header`
   a:hover {
     opacity: 1;
   }
-  .fa-bars {
-    display: none;
-    color: #222;
-    font-size: 2rem;
-  }
   nav {
-    ul {
-      display: flex;
-      justify-content: space-between;
-    }
-    li {
-      margin: 0 15px;
-      justify-content: space-between;
-      font-size: 1em;
-    }
     a {
       font-size: 1em;
       text-decoration: none;
-      .active {
-        color: tomato;
-      }
-    }
-    a.active {
-      color: #222;
     }
   }
 `;
@@ -92,7 +69,6 @@ function Nav() {
   const [openLoginDiaglog, toggleOpenLoginDialog] = useState(false)
 
   const handleToggle = (event) => {
-    event.preventDefault();
     toggleIsExpanded(!isExpanded)
   }
 
@@ -101,34 +77,55 @@ function Nav() {
   }
   return (
     <Navigation>
-      <div className="logo">
-        <Link to="/">
-          <p>SEER</p>
-          <em>
-            <div className="letterhead">
-              <span className="name">
-                Software Engineering Evidence Repository
-                </span>
-            </div>
-          </em>
-        </Link>
-      </div>
+      <HomeLogoLink />
       <nav className="nav">
         <div className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
-          <Link activeClassName="active" to="/">
-            <i className="material-icons"
-              aria-hidden="true">home</i>
-                Home
-          </Link>
-          <Link activeClassName="active" to="/about">
-            about
-          </Link>
+          <HomeLink />
+          <AboutLink />
           <Button onClick={onLogInButtonClicked}>Login</Button>
         </div>
       </nav>
       <LoginDialog open={openLoginDiaglog} toggleOpen={onLogInButtonClicked} />
     </Navigation>
   );
+}
+
+function HomeLogoLink() {
+  return (
+    <div className="logoNav">
+      <Link to="/">
+        <p>SEER</p>
+        <em>
+          <div className="letterhead">
+            <span className="name">
+              Software Engineering Evidence Repository
+                </span>
+          </div>
+        </em>
+      </Link>
+    </div>
+  )
+}
+
+function HomeLink() {
+  return (
+    <Link activeClassName="active" to="/">
+      <i className="material-icons"
+        aria-hidden="true">home</i>
+      Home
+    </Link>
+  )
+}
+
+function AboutLink() {
+  return (
+    <Link activeClassName="active" to="/about">
+      <i className="material-icons" aria-hidden="true">
+        info
+      </i>
+      about
+    </Link>
+  )
 }
 
 // open: boolean
@@ -140,12 +137,10 @@ function LoginDialog({ open, toggleOpen }) {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
     >
       <DialogTitle>Log in</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText>
           <Login />
         </DialogContentText>
       </DialogContent>

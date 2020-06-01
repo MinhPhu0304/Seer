@@ -1,30 +1,9 @@
+.nav {
+  min-width: 300px;
+}
 
-.logo a {
-  padding-top: 33px;
+.collapsed { 
   display: flex;
-  flex-direction: column;
-  clear: both;
-  padding-bottom: 30px;
-  text-decoration: none;
-
-  p {
-    width: 500px;
-    display: block;
-  }
-  em {
-    font-size: 0.5em;
-    float: left;
-    display: block;
-    img {
-      display: inline-block;
-      margin-top: 5px;
-      width: 15px;
-      float: left;
-    }
-    .letterhead {
-      display: inline-block;
-      line-height: 260%;
-      float: left;
-    }
-  }
+  justify-content: space-around;
+  align-items: baseline;
 }
