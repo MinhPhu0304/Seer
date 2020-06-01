@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, TextField } from '@material-ui/core'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import "./loginForm.css"
 
+const initialFormValues = {
+  email: '',
+  password: '',
+}
+
 function ValidatedLoginForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   return (
     <Formik
-      initialValues={{ email, password }}
+      initialValues={initialFormValues}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           console.log("Logging in", values);
