@@ -23,7 +23,10 @@ const articleSchema = new Schema({
     type: String,
     default: '',
   },
-  year: Number,
+  year: {
+    type: Number,
+    default: 0,
+  },
   volume: Number,
   number: Number,
   annote: String,

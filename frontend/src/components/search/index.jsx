@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, InputLabel, MenuItem, Fab } from '@material-ui/core';
 
 import { fieldValue as FieldValueMap, searchField, operator } from './constants';
-import { constructSearchQuery } from './helper';
+import { constructSearchQuery, validIfField } from './helper';
 import './search.css';
 
 export function Search({ submitSearch }) {
   const [description, setDescription] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [disableSubmit, toggleDisableSubmit] = useState(false)
   const [ifFieldValue, setIfFieldValue] = useState([])
   const onSubmit = (e) => {
     e.preventDefault()
@@ -24,6 +25,11 @@ export function Search({ submitSearch }) {
 
   const onChangeIfField = (values) => {
     setIfFieldValue(values)
+    if(!validIfField(values)) {
+      toggleDisableSubmit(true)
+    } else {
+      toggleDisableSubmit(false)
+    }
   }
 
   const handleDescriptionChange = (e) => {
@@ -46,7 +52,7 @@ export function Search({ submitSearch }) {
         </InputLabel>
         <DateField handleEndDateChange={handleEndDateChange} handleStartDateChange={handleStartDateChange} />
         <IfComponent onChangeIfField={onChangeIfField} />
-        <Button color="primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
+        <Button disabled={disableSubmit} color="primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
       </form>
     </div>
   );
@@ -55,7 +61,7 @@ export function Search({ submitSearch }) {
 function DateField({ handleStartDateChange, handleEndDateChange }) {
   return (
     <InputLabel className="search__input__field">
-      Date: <TextField label="From" type="date" variant="outlined"
+      Year: <TextField label="From" type="date" variant="outlined"
         onChange={handleStartDateChange}
         InputLabelProps={{
           shrink: true,
