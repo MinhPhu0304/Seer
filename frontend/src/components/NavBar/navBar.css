@@ -7,6 +7,9 @@
   justify-content: space-around;
   align-items: center;
 }
+.collapsed  > * { 
+  margin-left: 16px;
+}
 
 .Container__align_center {
   display: flex;

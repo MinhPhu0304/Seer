@@ -92,6 +92,7 @@ function NavigationView({ session }) {
         <div className="collapsed">
           <HomeLink />
           <AboutLink />
+          <SubmitArticleLink show={session.authenticated} />
           { !session.authenticated && <Button onClick={onLogInButtonClicked}>Login</Button>}
           { session.authenticated && <Button onClick={handleLogout}>Logout</Button> }
         </div>
@@ -136,6 +137,15 @@ function AboutLink() {
         info
       </i>
       about
+    </NavLink>
+  )
+}
+
+function SubmitArticleLink ({ show }) {
+  if (!show) return null
+  return (
+    <NavLink activeStyle={{ color: '#66BB6A' }} className="active Container__align_center" to="/submit">
+      Submit Article
     </NavLink>
   )
 }
