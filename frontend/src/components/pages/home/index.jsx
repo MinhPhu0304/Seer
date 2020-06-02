@@ -6,7 +6,7 @@ import { ArticleList } from '../../articleList';
 import { CircularLoading } from '../../progress';
 
 export function Home() {
-  const [articles, setArticle] = useState([])
+  const [articles, setArticle] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const submitSearch = async (query) => {

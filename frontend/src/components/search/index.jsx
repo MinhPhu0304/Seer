@@ -55,7 +55,7 @@ export function Search({ submitSearch }) {
 function DateField({ handleStartDateChange, handleEndDateChange }) {
   return (
     <InputLabel className="search__input__field">
-      Date: <TextField label="From" type="date" variant="outlined"
+      Year: <TextField label="From" type="date" variant="outlined"
         onChange={handleStartDateChange}
         InputLabelProps={{
           shrink: true,
