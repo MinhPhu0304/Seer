@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 // Our own components
 import { NavigationBar } from './components/NavBar';
 import { Home } from './components/pages/home';
-import { SubmitArticle } from './components/pages/submitArticle';
+import { SubmitArticlePage } from './components/pages/submitArticle';
 import { Manage } from './components/pages/manage';
 import About from './components/pages/About';
 import { Theme } from './theme';
@@ -31,7 +31,7 @@ function App() {
               <About />
             </Route>
             <Route exact path="/submit">
-              <SubmitArticle />
+              <SubmitArticlePage />
             </Route>
             <Route>
               <Home />
