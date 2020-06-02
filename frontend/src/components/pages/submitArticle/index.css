@@ -1,0 +1,13 @@
+.submit_article__container {
+  display: grid;
+  justify-content: center;
+  grid-gap: 8px;
+}
+
+.fill__Column > * {
+  width: 50%;
+}
+
+.fill__Column3 > * {
+  width: 100% / 3;
+}
