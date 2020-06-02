@@ -1,26 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
-import { Typography, TextField, Button } from '@material-ui/core'
+import { Typography, TextField, Button, Snackbar } from '@material-ui/core'
 
 import './index.css';
 
-export function SubmitArticle() {
+export function SubmitArticlePage() {
+  const [showSubmited, setShowSubmited] = useState(false)
+
+  const handleClose = () => {
+    setShowSubmited(false)
+  }
+
   return (
     <div>
       <Typography variant="h4" align="center">Submit new article</Typography>
-      <SubmitArticleForm />
+      <SubmitArticleForm setShowSubmited={setShowSubmited}/>
+      <Snackbar open={showSubmited} autoHideDuration={6000} onClose={handleClose} message="Successfully submit article"/>
     </div>
   )
 }
 
-function SubmitArticleForm() {
-
+function SubmitArticleForm({ setShowSubmited }) {
+  const [loading, setLoading] = useState(false)
+  const [disableSubmit, setDisableSubmit] = useState(false)
   const handleValidate = (values) => {
 
   }
 
   const handleFormikSubmit = async (value) => {
+    setLoading(true)
+    const submited = await submitArticle(value)
+    setLoading(false)
+    if (submited) {
+      setShowSubmited(true)
+      setDisableSubmit(true)
+    } else {
 
+    }
   }
   return (
     <Formik initialValues={getInitialFormValue()}
@@ -93,7 +109,7 @@ function SubmitArticleForm() {
               name="eprintclass" onChange={handleChange}
               value={values.eprintclass} />
           </div>
-          <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+          <Button type="submit" variant="contained" color="primary" disabled={isSubmitting || loading || disableSubmit}>
             Submit
           </Button>
         </Form>)
@@ -116,5 +132,22 @@ function getInitialFormValue() {
     eprint: '',
     eprinttype: '',
     eprintclass: '',
+  }
+}
+
+async function submitArticle (value) {
+  const response = await fetch('/api/article', makeFetchConfig(value))
+  if (!response.ok) return false
+  const body = await response.json()
+  return body
+}
+
+function makeFetchConfig(value) {
+  return {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(value)
   }
 }

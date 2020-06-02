@@ -13,6 +13,7 @@ const articleSchema = new Schema({
   },
   author: {
     type: String,
+    required: true,
     default: '',
   },
   journal: {
@@ -28,7 +29,6 @@ const articleSchema = new Schema({
     default: 0,
   },
   volume: Number,
-  number: Number,
   annote: String,
   pages: {
     type: String,
@@ -46,20 +46,14 @@ const articleSchema = new Schema({
     type: String,
     default: '',
   },
-  method: {
-    type: [String],
-  },
   analyzer: {
     type: Schema.Types.ObjectId,
     ref: userModel.name,
   },
-  methodlogy: [String],
-  benefit: [String],
-  participants: [String],
 });
 
-const articleModel = model('Article', articleSchema);
+const submitedArticleModel = model('submitedArticle', articleSchema);
 
 module.exports = {
-  articleModel,
+  submitedArticleModel,
 };
