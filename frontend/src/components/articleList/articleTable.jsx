@@ -21,7 +21,7 @@ function Row(props) {
         <TableCell align="right">{row.author || '-'}</TableCell>
         <TableCell align="right">{row.methodlogy ? row.methodlogy.join() : '-'}</TableCell>
         <TableCell align="right">{row.month || '-'}</TableCell>
-        <TableCell align="right">{row.year || '-'}</TableCell>
+        <TableCell align="right">{row.year !== 0 ? row.year : '-'}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -54,41 +54,45 @@ function ExtraInfor({ row }) {
 
 export default function ArticlesTable({ articles }) {
   const [sortedArticle, setSortedArticle] = useState(articles)
+  const [currentActiveCol, setCurrentActiveCol] = useState(null)
+  const [currentDirection, setCurrentDirection] = useState('asc')
   const [ascSort, toggleAscSort] = useState(true)
   const handleSortBy = (sortLabel) => () => {
     toggleAscSort(!ascSort)
+    setCurrentActiveCol(sortLabel)
+    setCurrentDirection(!ascSort ? 'asc' : 'desc')
     setSortedArticle(orderBy(sortedArticle, [sortLabel], [!ascSort ? 'asc' : 'desc']))
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+    <TableContainer component={Paper} style={{ height: 400 }}>
+      <Table aria-label="collapsible table" stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell align="left">
-              <TableSortLabel onClick={handleSortBy('title')}>
+              <TableSortLabel active={currentActiveCol === 'title'} direction={currentDirection} onClick={handleSortBy('title')}>
                 Title
               </TableSortLabel>
             </TableCell>
             <TableCell align="center">
-              <TableSortLabel onClick={handleSortBy('author')}>
+              <TableSortLabel active={currentActiveCol === 'author'} direction={currentDirection} onClick={handleSortBy('author')}>
                 Author
               </TableSortLabel>
             </TableCell>
             <TableCell align="right">
-              <TableSortLabel onClick={handleSortBy('method')}>
+              <TableSortLabel active={currentActiveCol === 'method'} direction={currentDirection} onClick={handleSortBy('method')}>
                 SE Methodlogy
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="right">
-              <TableSortLabel onClick={handleSortBy('year')}>
-                Year
               </TableSortLabel>
             </TableCell>
             <TableCell align="right">
               <TableSortLabel onClick={handleSortBy('month')}>
                 Month
+              </TableSortLabel>
+            </TableCell>
+            <TableCell align="right">
+              <TableSortLabel active={currentActiveCol === 'year'} direction={currentDirection} onClick={handleSortBy('year')}>
+                Year
               </TableSortLabel>
             </TableCell>
           </TableRow>
