@@ -3,7 +3,7 @@ import { omit, isEmpty, omitBy } from 'lodash'
 export function validIfField (ifFieldValue) {
   let valid = true
   ifFieldValue.forEach((ifField) => {
-    if(ifField['fieldPicked'] != '' && (ifField['operatorPicked'] == '' || ifField['valuePicked'] == '')) valid = false
+    if(ifField['fieldPicked'] !== '' && (ifField['operatorPicked'] === '' || ifField['valuePicked'] === '')) valid = false
   })
   return valid
 }
