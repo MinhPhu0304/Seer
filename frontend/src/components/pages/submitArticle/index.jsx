@@ -7,7 +7,7 @@ import './index.css';
 export function SubmitArticle() {
   return (
     <div>
-      <Typography variant="h4" align="center">Submit new aricle</Typography>
+      <Typography variant="h4" align="center">Submit new article</Typography>
       <SubmitArticleForm />
     </div>
   )
