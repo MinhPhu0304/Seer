@@ -43,6 +43,7 @@ export function Search({ submitSearch }) {
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value)
   }
+
   return (
     <div className="search__container">
       <form className="search__form" autoComplete="off" onSubmit={onSubmit}>
