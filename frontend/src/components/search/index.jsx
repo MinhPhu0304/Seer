@@ -43,6 +43,11 @@ export function Search({ submitSearch }) {
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value)
   }
+
+  const testBreak = () => {
+    throw new Error("Test run")
+  }
+
   return (
     <div className="search__container">
       <form className="search__form" autoComplete="off" onSubmit={onSubmit}>
@@ -53,6 +58,7 @@ export function Search({ submitSearch }) {
         <DateField handleEndDateChange={handleEndDateChange} handleStartDateChange={handleStartDateChange} />
         <IfComponent onChangeIfField={onChangeIfField} />
         <Button disabled={disableSubmit} color="primary" variant="contained" type="submit" onClick={onSubmit}>Run Search</Button>
+        <Button disabled={disableSubmit} color="primary" variant="contained" type="button" onClick={testBreak}>Destroy</Button>
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 
 // Our own components
 import { NavigationBar } from './components/NavBar';
+import { ErrorBoundary } from './errorCapture'
 import { Home } from './components/pages/home';
 import { SubmitArticlePage } from './components/pages/submitArticle';
 import { Manage } from './components/pages/manage';
@@ -19,27 +20,29 @@ import './App.css';
 
 function App() {
   return (
-    <Provider store={store}>
-      <Theme>
-        <Router>
-          <NavigationBar />
-          <Switch>
-            <Route exact path="/manage">
-              <Manage />
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route exact path="/submit">
-              <SubmitArticlePage />
-            </Route>
-            <Route>
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
-      </Theme>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <Theme>
+          <Router>
+            <NavigationBar />
+            <Switch>
+              <Route exact path="/manage">
+                <Manage />
+              </Route>
+              <Route exact path="/about">
+                <About />
+              </Route>
+              <Route exact path="/submit">
+                <SubmitArticlePage />
+              </Route>
+              <Route>
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+        </Theme>
+      </Provider>
+    </ErrorBoundary>
   );
 }
 
