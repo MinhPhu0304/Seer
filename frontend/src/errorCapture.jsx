@@ -4,16 +4,25 @@ import * as Sentry from '@sentry/browser';
 Sentry.init({dsn: "https://5dec6c399cf84c4da9ec679be9568075@o265348.ingest.sentry.io/5273439"});
 
 export class ErrorBoundary extends Component {
-  state = {
-    hasError: false,
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false,
+    }
+  }
+
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
     Sentry.withScope((scope) => {
       scope.setExtras(errorInfo);
       Sentry.captureException(error);
-      this.setState({ hasError: true })
     });
+    this.setState({ hasError: true });
   }
 
   render() {
